@@ -1,0 +1,23 @@
+{
+  "name": "Subscription Audit",
+  "short_name": "Sub Audit",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071018",
+  "theme_color": "#08131a",
+  "description": "Track subscriptions across web and mobile from one secure dataset.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

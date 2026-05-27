@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08131a" />
+  <meta name="description" content="Subscription Audit tracks recurring charges across web and mobile with a single secure data model." />
+  <title>Subscription Audit</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="maskable-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">SA</div>
+        <div>
+          <div class="brand-name">Subscription Audit</div>
+          <div class="brand-sub">Unified web funnel, dashboard, and mobile tracking app</div>
+        </div>
+      </div>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="#web" class="nav-link">Website</a>
+        <a href="#dashboard" class="nav-link">Dashboard</a>
+        <a href="#app" class="nav-link">App</a>
+        <a href="#security" class="nav-link">Security</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="ghost-btn" id="loadDemoBtn" type="button">Load demo</button>
+        <button class="ghost-btn" id="installBtn" type="button" disabled>Install app</button>
+        <button class="primary-btn" id="scanBtn" type="button">Scan now</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero-band" id="web">
+        <div class="hero-copy">
+          <div class="eyebrow">Subscription intelligence for web and mobile</div>
+          <h1>Stop wasting money on forgotten trials.</h1>
+          <p class="lede">
+            Upload a statement on the website, see the parsed subscriptions instantly, then move to the mobile app for
+            renewal alerts, linked-account monitoring, and secure daily tracking.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-btn" id="scanNowBtn" type="button">Scan statement</button>
+            <a class="ghost-link" href="#app">Open mobile app</a>
+          </div>
+          <div class="hero-counters">
+            <article>
+              <strong id="savingsCounter">$0</strong>
+              <span>potential monthly savings</span>
+            </article>
+            <article>
+              <strong id="renewalCounter">0</strong>
+              <span>upcoming renewals</span>
+            </article>
+            <article>
+              <strong id="linkedCounter">0</strong>
+              <span>linked accounts</span>
+            </article>
+            <article>
+              <strong id="fileCounter">0</strong>
+              <span>files processed</span>
+            </article>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="hero-panel-head">
+            <span class="status-dot"></span>
+            <span>Live account snapshot</span>
+          </div>
+          <div class="hero-mini-chart" id="heroMiniChart"></div>
+          <div class="hero-figures">
+            <div>
+              <span>Monthly spend</span>
+              <strong id="monthlySpend">$0</strong>
+            </div>
+            <div>
+              <span>Next renewal</span>
+              <strong id="nextRenewal">--</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content-grid" id="dashboard">
+        <section class="band">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Web dashboard</p>
+              <h2>Parsed subscriptions, categories, and renewal timing</h2>
+            </div>
+            <p class="section-note">One database powers both surfaces.</p>
+          </div>
+          <div class="dashboard-grid">
+            <div class="panel-card chart-card">
+              <div class="panel-card-head">
+                <h3>Spend by category</h3>
+                <span>Entertainment, software, utilities, and more</span>
+              </div>
+              <div class="chart-wrap">
+                <div id="categoryChart" class="chart-host"></div>
+                <div class="chart-legend" id="categoryLegend"></div>
+              </div>
+            </div>
+            <div class="panel-card timeline-card">
+              <div class="panel-card-head">
+                <h3>Upcoming renewals</h3>
+                <span>Sorted by date</span>
+              </div>
+              <div id="timelineList" class="timeline-list"></div>
+            </div>
+          </div>
+          <div class="table-card">
+            <div class="panel-card-head">
+              <h3>Tracked subscriptions</h3>
+              <span>Unified records from upload and bank linking</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Vendor</th>
+                    <th>Amount</th>
+                    <th>Cycle</th>
+                    <th>Next renewal</th>
+                    <th>Status</th>
+                    <th>Source</th>
+                  </tr>
+                </thead>
+                <tbody id="subscriptionTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="band">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Upload portal</p>
+              <h2>Drag in a PDF, CSV, or pasted statement text</h2>
+            </div>
+            <p class="section-note">Parsing runs locally in the browser for the demo.</p>
+          </div>
+          <div class="upload-grid">
+            <label class="dropzone" id="dropzone">
+              <input id="statementFile" type="file" accept=".csv,.txt,.pdf" hidden />
+              <strong>Drop a statement here</strong>
+              <span>or click to browse your files</span>
+              <small>Best effort PDF extraction, CSV parsing, and keyword matching are supported.</small>
+            </label>
+            <div class="paste-card">
+              <div class="panel-card-head compact">
+                <h3>Paste statement text</h3>
+                <span>Useful when you want to test the parser quickly</span>
+              </div>
+              <textarea id="statementPaste" spellcheck="false" placeholder="Netflix 15.49 2026-05-28
+Spotify 11.99 2026-06-01
+Adobe 22.99 2026-05-28"></textarea>
+              <div class="paste-actions">
+                <button class="ghost-btn" id="parseTextBtn" type="button">Parse text</button>
+                <div class="parse-summary" id="parseSummary">No file processed yet.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="app-band" id="app">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Mobile app</p>
+            <h2>Face ID-style access, linked accounts, and renewal alerts</h2>
+          </div>
+          <p class="section-note">This is the same data model, rendered as a mobile-first surface.</p>
+        </div>
+        <div class="app-grid">
+          <div class="phone-shell">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="mobileApp"></div>
+          </div>
+          <div class="app-panels">
+            <section class="panel-card">
+              <div class="panel-card-head">
+                <h3>Linked accounts</h3>
+                <span>Read-only connections only</span>
+              </div>
+              <div id="linkedAccounts" class="account-list"></div>
+            </section>
+            <section class="panel-card">
+              <div class="panel-card-head">
+                <h3>Action center</h3>
+                <span>Keep or cancel</span>
+              </div>
+              <div id="actionCenter" class="action-feed"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="security-band" id="security">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Security and governance</p>
+            <h2>Encrypted storage, MFA, sandbox parsing, and audit logging</h2>
+          </div>
+          <p class="section-note">Built to support the security posture you outlined.</p>
+        </div>
+        <div class="security-grid">
+          <article class="security-card">
+            <h3>Encrypted pipeline</h3>
+            <p>TLS in transit, encrypted records at rest, and tokenized bank-link data.</p>
+          </article>
+          <article class="security-card">
+            <h3>Identity controls</h3>
+            <p>MFA on web, biometric unlock on mobile, and a short inactivity timeout.</p>
+          </article>
+          <article class="security-card">
+            <h3>Parser sandbox</h3>
+            <p>Uploaded files are isolated, scanned, and reduced to structured subscription records.</p>
+          </article>
+          <article class="security-card">
+            <h3>Audit trail</h3>
+            <p>Every import, edit, and alert action is recorded for review.</p>
+          </article>
+        </div>
+        <div class="log-band">
+          <div class="panel-card-head">
+            <h3>Recent activity</h3>
+            <span>Local demo feed</span>
+          </div>
+          <div id="auditLog" class="audit-log"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

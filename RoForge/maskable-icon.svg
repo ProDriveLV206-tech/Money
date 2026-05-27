@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Subscription Audit maskable icon">
+  <rect width="128" height="128" rx="28" fill="#071018"/>
+  <circle cx="64" cy="64" r="44" fill="#35d0c0"/>
+  <path d="M40 40h48v48H40z" fill="#071018"/>
+  <path d="M48 48h32v32H48z" fill="#f0b860"/>
+</svg>
